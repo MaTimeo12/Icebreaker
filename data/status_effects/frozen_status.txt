@@ -1,0 +1,10 @@
+{
+  "StatusEffect": {
+    "ID": "frozen",
+    "DisplayName": "Gelé",
+    "Icon": "icons/frozen.png",
+    "Color": "lightblue",
+    "SlowMovement": 0.5,
+    "ReduceFireRate": 0.7
+  }
+}

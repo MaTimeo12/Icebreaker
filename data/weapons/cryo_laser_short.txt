@@ -1,0 +1,31 @@
+{
+  "Part": {
+    "ID": "cryo_laser_short",
+    "DisplayName": "Cryo Laser MK-I",
+    "Icon": "sprites/cryo_laser.png",
+    "Cost": 1000,
+    "Size": [2, 2],
+    "Mass": 15,
+    "Power": {
+      "Capacity": 800,
+      "ConsumptionRate": 8
+    },
+    "Weapon": {
+      "Type": "Beam",
+      "BeamColor": "lightblue",
+      "FireRate": 3,
+      "Damage": 3,
+      "BeamSprite": "sprites/cryo_beam.png",
+      "StatusEffects": [
+        {
+          "ID": "frozen",
+          "Duration": 3
+        }
+      ],
+      "ThermalEffect": {
+        "TemperatureDelta": -20,
+        "Radius": 1
+      }
+    }
+  }
+}

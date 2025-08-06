@@ -1,0 +1,31 @@
+{
+  "Part": {
+    "ID": "cryo_laser_heavy",
+    "DisplayName": "Cryyo Laser MK-II",
+    "Icon": "sprites/cryo_laser.png",
+    "Cost": 3000,
+    "Size": [3, 2],
+    "Mass": 30,
+    "Power": {
+      "Capacity": 1500,
+      "ConsumptionRate": 15
+    },
+    "Weapon": {
+      "Type": "Beam",
+      "BeamColor": "cyan",
+      "FireRate": 0.5,
+      "Damage": 10,
+      "BeamSprite": "sprites/cryo_beam.png",
+      "StatusEffects": [
+        {
+          "ID": "frozen",
+          "Duration": 7
+        }
+      ],
+      "ThermalEffect": {
+        "TemperatureDelta": -50,
+        "Radius": 2
+      }
+    }
+  }
+}

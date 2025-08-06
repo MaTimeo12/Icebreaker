@@ -1,0 +1,7 @@
+{
+  "Author": "MaTimeo12",
+  "Name": "Cryo Lasers",
+  "Version": "1.0.0",
+  "ModFolder": "MaTimeo12.CryoLasers",
+  "Folders": ["data"]
+}
