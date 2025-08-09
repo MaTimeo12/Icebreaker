@@ -1,0 +1,17 @@
+// English localization for Cryo Lasers mod
+
+Strings
+[
+    { ID = "Parts/CryoLaserSmall" Text = "Cryo Laser MK-I" }
+    { ID = "Parts/CryoLaserSmallDesc" Text = "Small cryogenic beam weapon. Deals light hull damage and applies a short freezing debuff slowing movement & fire rate. Overclock: faster beam & longer freeze." }
+
+    { ID = "Parts/CryoLaserHeavy" Text = "Cryo Laser MK-II" }
+    { ID = "Parts/CryoLaserHeavyDesc" Text = "Heavy cryogenic beam. Strong sustained DPS and severe freezing effect. Overclock: wider beam, amplified damage, extended freeze." }
+
+    { ID = "Status/Frozen" Text = "Frozen" }
+    { ID = "Status/FrozenDesc" Text = "Movement -50%, Fire Rate -30%. Some systems temporarily inhibited by extreme cold." }
+
+    // Stat category labels
+    { ID = "StatCategories/Cryo" Text = "Cryo Beam" }
+    { ID = "StatCategories/CryoHeavy" Text = "Cryo Beam Heavy" }
+]

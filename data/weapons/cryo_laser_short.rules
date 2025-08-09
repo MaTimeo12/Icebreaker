@@ -1,0 +1,180 @@
+// ==============================
+// Cryo Laser Léger (Overclockable)
+// ==============================
+// Version simplifiée inspirée des définitions vanilla (laser blaster small)
+// NOTE: Ajuste les chemins d'héritage si nécessaire selon les bases disponibles dans le jeu.
+
+OVERCLOCK
+{
+    // Chaleur par tir supplémentaire en mode overclock
+    HEAT_PER_SHOT = 70
+    FIRE_RATE_FACTOR = 180%
+    // Facteur de consommation d'énergie
+    POWER_USE_FACTOR = 150%
+    // Facteur de dégâts (appliqué sur le DPS de base pour overclock)
+    DAMAGE_FACTOR = 140%
+    // Durée supplémentaire de gel appliquée en overclock
+    FROZEN_DURATION = 4s
+}
+
+Part : <../base_part_terran_overclock.rules>/Part
+{
+    NameKey = "Parts/CryoLaserSmall"
+    DescriptionKey = "Parts/CryoLaserSmallDesc"
+    ID = matimeo.cryo_laser_small
+    EditorGroup = "WeaponsEnergy"
+    Size = [1,3]
+    PhysicalRect = [0,1,1,2]
+    SaveRect = &PhysicalRect
+    Icon = "sprites/cryo_laser.png"
+    Resources [ [steel,28] [coil,10] [crystal,4] ]
+    TypeCategories = [weapon, uses_power]
+    MaxHealth = 4200
+    InitialPenetrationResistance = 1
+    ProhibitAbove = 1
+    AllowedDoorLocations [ [-1,2] [1,2] [0,3] ]
+
+    Components
+    {
+        // Activation générale
+        IsOperational
+        {
+            Type = MultiToggle
+            Toggles = [PowerToggle, BatteryStorage]
+            Mode = All
+        }
+        PowerToggle { Type = UIToggle ToggleID = "on_off" Default = 1 }
+
+        // Stockage d'énergie
+        BatteryStorage
+        {
+            Type = ResourceStorage
+            ResourceType = battery
+            MaxResources = 3500
+        }
+        BatteryConsumer
+        {
+            Type = ResourceConsumer
+            ResourceType = battery
+            Storage = BatteryStorage
+            ResupplyThreshold = 400
+            OperationalToggle = IsOperational
+        }
+
+        // Mode Overclock (UIToggle simple)
+        OverclockModeToggle
+        {
+            Type = UIToggle
+            ToggleID = "overclock"
+            Default = 0
+        }
+        IsOverclocked { Type = ToggleProxy Toggle = OverclockModeToggle }
+
+        Turret
+        {
+            Type = TurretWeapon
+            Location = [.5,0.5]
+            Rotation = -90d
+            OperationalToggle = IsOperational
+            FiringArc = 200d
+            RotateSpeed = 95d
+            FireInterval
+            {
+                BaseValue = 0.8
+                Modifiers
+                [
+                    { Type = BuffRemap Toggle = OverclockModeToggle RemapFrom=[0,1] RemapTo=[1,( &~/OVERCLOCK/FIRE_RATE_FACTOR )] ModificationMode = Divide }
+                ]
+            }
+            Emitter = WeaponEmitterSelector
+        }
+
+        WeaponEmitterSelector
+        {
+            Type = ToggleEmitterSelector
+            Toggle = IsOverclocked
+            ToggleOffEmitter = BeamEmitterBase
+            ToggleOnEmitter = BeamEmitterOverclock
+        }
+
+        // Emetteur normal
+        BeamEmitterBase
+        {
+            Type = BeamEmitter
+            ChainedTo = Turret
+            FireTrigger = Turret
+            Location = [0.5,0]
+            OperationalToggle = IsOperational
+            BeamTexture = "sprites/cryo_beam.png"
+            Range = 135
+            Width = 0.25
+            DamagePerSecond = 6
+            Warmup = 0.05
+            PowerUsePerSecond = 9
+            OnHitApplyStatusEffects [ { ID = frozen Duration = 2.5s } ]
+            ThermalEffect
+            {
+                TemperatureDeltaPerSecond = -18
+                Radius = 1
+            }
+        }
+
+        // Emetteur overclock (hérite et modifie valeurs)
+        BeamEmitterOverclock : BeamEmitterBase
+        {
+            DamagePerSecond = (&^/0/DamagePerSecond) * (&~/OVERCLOCK/DAMAGE_FACTOR)
+            PowerUsePerSecond = (&^/0/PowerUsePerSecond) * (&~/OVERCLOCK/POWER_USE_FACTOR)
+            OnHitApplyStatusEffects [ { ID = frozen Duration = (&~/OVERCLOCK/FROZEN_DURATION) } ]
+            Width = 0.3
+            ThermalEffect
+            {
+                TemperatureDeltaPerSecond = -30
+                Radius = 1.25
+            }
+        }
+
+        ReloadProgress
+        {
+            Type = ProgressBar
+            OperationalToggle = IsOperational
+            ShowProgressFor = Turret
+        }
+
+        // Indicateur Overclock (facultatif simple)
+        OverclockIndicator
+        {
+            Type = IndicatorSprite
+            Location = [.5,1.4]
+            Toggle = OverclockModeToggle
+            Sprite
+            {
+                File = &/INDICATORS/Overclock
+                Size = [1,1]
+            }
+        }
+
+        DestroyedEffects { Type = DeathEffects MediaEffects = &/COMMON_EFFECTS/MedPartDestroyed Location = [.5,1.5] }
+    }
+
+    Stats
+    {
+        PowerCapacity = (&~/Part/Components/BatteryStorage/MaxResources) / 1000
+        DamagePerSecond = &~/Part/Components/BeamEmitterBase/DamagePerSecond
+        Range = &~/Part/Components/BeamEmitterBase/Range
+    }
+
+    StatsByCategory
+    [
+        {
+            Name = "Cryo"
+            Stats
+            {
+                BaseDPS = &~/Part/Components/BeamEmitterBase/DamagePerSecond
+                OverclockDPS = (&BaseDPS) * (&~/OVERCLOCK/DAMAGE_FACTOR)
+                Range = &~/Part/Components/BeamEmitterBase/Range
+                PowerPerSecond = &~/Part/Components/BeamEmitterBase/PowerUsePerSecond
+                OverclockPowerPerSecond = (&PowerPerSecond) * (&~/OVERCLOCK/POWER_USE_FACTOR)
+            }
+        }
+    ]
+}

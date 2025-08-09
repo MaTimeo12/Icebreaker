@@ -1,0 +1,21 @@
+// Effet de statut Cryo qui ralentit et réduit la cadence de tir
+// ID simple (utilisé par les armes) – éviter les collisions avec d'autres mods si possible en préfixant (ex: matimeo.frozen)
+StatusEffect
+{
+    ID = frozen
+    NameKey = "Status/Frozen"
+    DescriptionKey = "Status/FrozenDesc"
+    // Couleur de surbrillance éventuelle
+    Color = lightblue
+    // Durée par défaut (peut être surchargée côté arme lors de l'application)
+    DefaultDuration = 3s
+    // Facteurs multiplicatifs (1 = normal). Ici on ralentit le mouvement et la cadence.
+    MovementSpeedFactor = 0.5
+    FireRateFactor = 0.7
+    // Optionnel : effet visuel de givre (si assets disponibles)
+    // OverlayEffect
+    // {
+    //     Type = TintOverlay
+    //     Color = [0.6, 0.8, 1.0, 0.35]
+    // }
+}

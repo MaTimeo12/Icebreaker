@@ -1,0 +1,16 @@
+// Localisation française pour le mod Cryo Lasers
+
+Strings
+[
+    { ID = "Parts/CryoLaserSmall" Text = "Cryo Laser MK-I" }
+    { ID = "Parts/CryoLaserSmallDesc" Text = "Petit laser cryogénique. Inflige de légers dégâts et applique un gel qui ralentit le mouvement et la cadence de tir. Overclock : tir plus rapide, gel prolongé." }
+
+    { ID = "Parts/CryoLaserHeavy" Text = "Cryo Laser MK-II" }
+    { ID = "Parts/CryoLaserHeavyDesc" Text = "Laser cryogénique lourd. Dégâts soutenus et gel sévère. Overclock : faisceau élargi, dégâts amplifiés, gel prolongé." }
+
+    { ID = "Status/Frozen" Text = "Gelé" }
+    { ID = "Status/FrozenDesc" Text = "Vitesse -50 %, Cadence -30 %. Certains systèmes sont temporairement inhibés par le froid extrême." }
+
+    { ID = "StatCategories/Cryo" Text = "Cryo Faisceau" }
+    { ID = "StatCategories/CryoHeavy" Text = "Cryo Faisceau Lourd" }
+]
