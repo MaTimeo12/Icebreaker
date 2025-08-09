@@ -26,7 +26,7 @@ Part : <../base_part_terran_overclock.rules>/Part
     Size = [1,3]
     PhysicalRect = [0,1,1,2]
     SaveRect = &PhysicalRect
-    Icon = "sprites/cryo_laser.png"
+    Icon = "sprites/cryo_laser_small.png"
     Resources [ [steel,28] [coil,10] [crystal,4] ]
     TypeCategories = [weapon, uses_power]
     MaxHealth = 4200
